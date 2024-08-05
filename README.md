@@ -2,6 +2,7 @@
 Rails + Mysql + Multi tenancy  
 
 注)内容更新中  
+Wikiに移行
 
 MysqlでのSingle SchemaによるMulti Tenancy実装を検討する。  
 前提として以下を考慮する。  
@@ -25,6 +26,8 @@ MysqlでのSingle SchemaによるMulti Tenancy実装を検討する。
   - ActiveRecord(ORM)が実行するデータマッピング用の情報取得のクエリの実行時間が増大する
     - スキーマ、テーブルが多いと影響が出る（アプリケーションへの実害があるかは不明）
 - DBの問題
+  - linuxのファイル数の問題？
+    - 【追加調査】
   - メモリ使用率の上昇
     - 【追記必要】
     - スキーマ、テーブルの数が多い事が起因となり、Cloud上でのDBのバックアップ、dumpが失敗したり、時間が極端にかかるなどありえる
@@ -86,6 +89,7 @@ https://dev.mysql.com/doc/refman/8.0/ja/view-check-option.html
 - id採番の手法に問わず既存のid発行の型、手法は変更しない
 - id, tenant_idで複合Primary keyに変更する
 - auto incrementの値を任意に設定すれば、id重複のエラーを回避できる
+- 統合ののちにテナント数が増加した際に、再度サーバー分割を検討する未来を想定して複数アプリケーションサーバー稼働を想定した方がいい
 
 ## 移行計画
 - どの単位で移行するか
